@@ -1,4 +1,5 @@
 import React from "react";
+import copyPath from "../assets/copy-path.png";
 
 export const AdditionalInfo = () => {
   return (
@@ -36,8 +37,8 @@ export const AdditionalInfo = () => {
       </div>
 
       {/* last component */}
-      <div className="px-4">
-        <div className="flex justify-between items-center">
+      <div className="h-[250px] w-full relative">
+        <div className="flex justify-between items-center px-4">
           <h3 className="text-xl font-bold leading-[24px] text-[#003339] mb-4">
             Temprature
           </h3>
@@ -45,6 +46,10 @@ export const AdditionalInfo = () => {
           <select name="Last Month" className="w-[140px] py-2 px-4 border">
             <option value="Last month">Last month</option>
           </select>
+        </div>
+
+        <div className="relative mt-4">
+          <img src={copyPath} alt="path" />
         </div>
       </div>
     </div>
