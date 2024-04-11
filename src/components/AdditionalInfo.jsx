@@ -1,6 +1,5 @@
 import React from "react";
 import copyPath from "../assets/copy-path.png";
-import { fahrenheitToCelsius } from "../utils";
 
 export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
   return (

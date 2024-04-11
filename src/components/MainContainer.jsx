@@ -30,7 +30,7 @@ export const MainContainer = () => {
     getWeatherData();
   }, [latitude, longitude]);
 
-  const handleShowScreenTwo = () => {
+  const handleShowScreenTwo = (name, country) => {
     navigate(
       `/current-location/${weatherData?.name}/${weatherData?.sys.country}`
     );

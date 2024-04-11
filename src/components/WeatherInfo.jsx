@@ -1,8 +1,11 @@
 import React from "react";
 import { AdditionalInfo } from "./AdditionalInfo";
 import { weatherStatus } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export const WeatherInfo = ({ weatherData }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       {/* city info */}
@@ -32,14 +35,23 @@ export const WeatherInfo = ({ weatherData }) => {
             </>
           )}
         </div>
-        <div>
+        <div className="relative">
           <img
             src="https://images.unsplash.com/photo-1556541845-443e0c6e8e66?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="city"
             height={300}
             width={400}
-            className="rounded-lg h-[110px] w-[130px] sm:h-[550px] sm:w-[500px]"
+            className="rounded-lg h-[125px] w-[150px] sm:h-[550px] sm:w-[500px] relative"
           />
+          <button
+            className="bg-[#FF2D55] text-white px-4 py-1 rounded-lg cursor-pointer absolute bottom-2 right-2"
+            onClick={() =>
+              navigate(
+                `/current-location/${weatherData?.name}/${weatherData?.sys.country}`
+              )
+            }>
+            Live
+          </button>
         </div>
       </div>
 
