@@ -32,3 +32,7 @@ export const weatherStatus = [
     temperature: "24",
   },
 ];
+
+export function fahrenheitToCelsius(fahrenheit) {
+  return ((fahrenheit - 32) * 5) / 9;
+}

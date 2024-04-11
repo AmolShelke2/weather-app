@@ -1,24 +1,76 @@
-import React, { useEffect } from "react";
-import cloudy from "../assets/weather-clouds.svg";
-import { weatherStatus } from "../utils";
+import React, { useEffect, useState } from "react";
 import { AdditionalInfo } from "./AdditionalInfo";
+import { API_KEY } from "../utils";
 
-export const WeatherInfo = ({ searchTerm }) => {
+export const WeatherInfo = () => {
+  const [weatherData, setWeatherData] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  useEffect(() => {
+    const getWeatherData = async () => {
+      try {
+        const apiKey = API_KEY;
+
+        if (latitude !== null && longitude !== null) {
+          const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+          setWeatherData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+
+    getWeatherData();
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
   return (
     <div>
       {/* city info */}
-      <div className="flex items-start gap-6 lg:gap-0 lg:items-center justify-around my-10">
+      <div className="flex items-center justify-around my-10">
         {/* text-info */}
         <div>
-          <h2 className="font-bold text-[35px] leading-[45px] text-[#003339] tracking-[0.25px]">
-            New york <br /> United States
-          </h2>
-          <p className="text-[#96969A] text-lg font-bold mt-4">Apr 10, 2024</p>
+          {weatherData && (
+            <>
+              <h2 className="font-bold text-[35px] leading-[45px] text-[#003339] tracking-[0.25px]">
+                {weatherData.name}, {weatherData.sys.country}
+              </h2>
+              <p className="text-[#96969A] text-lg font-bold mt-4">
+                {new Date(weatherData.dt * 1000).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </p>
 
-          <div className="flex gap-2 mt-4">
-            <img src={cloudy} alt="weather-info" />
-            <p>Cloudy</p>
-          </div>
+              <div className="flex gap-2 items-center mt-4">
+                <img
+                  src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                  alt="weather-info"
+                />
+                <p>{weatherData.weather[0].main}</p>
+              </div>
+            </>
+          )}
         </div>
         <div>
           <img
@@ -31,21 +83,11 @@ export const WeatherInfo = ({ searchTerm }) => {
         </div>
       </div>
 
-      {/* weather status */}
-      <div className="w-full flex gap-1  lg:justify-between px-2 lg:px-6 lg:gap-4 bg-[#003339] text-white mt-8 mb-12 rounded-2xl">
-        {weatherStatus.map((weather) => (
-          <div className="flex flex-col items-center gap-1 py-4 px-4">
-            <span className="text-lg font-normal">{weather.time}</span>
-            <img
-              src={weather.icon}
-              alt="weather-icon"
-              className="object-contain"
-            />
-            <p>{weather.temperature}</p>
-          </div>
-        ))}
-      </div>
-      <AdditionalInfo />
+      <AdditionalInfo
+        humidity={weatherData?.main.humidity}
+        wind={weatherData?.wind.speed}
+        precipitation={weatherData?.main.temp}
+      />
     </div>
   );
 };

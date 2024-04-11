@@ -1,7 +1,7 @@
 import React from "react";
 import copyPath from "../assets/copy-path.png";
 
-export const AdditionalInfo = () => {
+export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
   return (
     <div>
       {/* additional weather info */}
@@ -16,7 +16,7 @@ export const AdditionalInfo = () => {
               Precipitation
             </h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
-              3%
+              {precipitation}
             </p>
           </div>
           <div>
@@ -24,13 +24,13 @@ export const AdditionalInfo = () => {
               Humidity
             </h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
-              74%
+              {humidity}%
             </p>
           </div>
           <div>
             <h4 className="text-[#96969A] text-sm mb-2 font-medium">Windy</h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
-              18 km/h{" "}
+              {wind} km/h{" "}
             </p>
           </div>
         </div>
