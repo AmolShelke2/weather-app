@@ -58,8 +58,8 @@ export const WeatherInfo = ({ weatherData }) => {
       <div className="w-full flex gap-1  lg:justify-between px-2 lg:px-6 lg:gap-4 bg-[#003339] text-white mt-8 mb-12 rounded-2xl">
         {weatherStatus.map((weather) => (
           <div
-            className="flex flex-col items-center gap-1 py-4 px-4"
-            key={weather.icon}>
+            className="flex flex-col items-center gap-1 py-4 px-4 hover:bg-locationBtn rounded-xl my-1"
+            key={weather.id}>
             <span className="text-lg font-normal">{weather.time}</span>
             <img
               src={weather.icon}

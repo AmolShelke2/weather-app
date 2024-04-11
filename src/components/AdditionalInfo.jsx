@@ -1,5 +1,6 @@
 import React from "react";
 import copyPath from "../assets/copy-path.png";
+import { kelvinToCelsius } from "../utils";
 
 export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
   return (
@@ -16,7 +17,7 @@ export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
               Temprature
             </h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
-              {precipitation}
+              {kelvinToCelsius(precipitation).toFixed(2)}°C
             </p>
           </div>
           <div>
@@ -49,7 +50,7 @@ export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
         </div>
 
         <div className="relative mt-4">
-          <img src={copyPath} alt="path" className="w-full" />
+          <img src={copyPath} alt="path" className="w-full sm:w-auto" />
         </div>
       </div>
     </div>
