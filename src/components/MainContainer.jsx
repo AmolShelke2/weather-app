@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { WeatherInfo } from "./WeatherInfo";
-import { Link } from "react-router-dom";
 import { API_KEY } from "../utils";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +31,9 @@ export const MainContainer = () => {
   }, [latitude, longitude]);
 
   const handleShowScreenTwo = () => {
-    navigate(`/current-location/${weatherData?.name}`);
+    navigate(
+      `/current-location/${weatherData?.name}/${weatherData?.sys.country}`
+    );
   };
 
   useEffect(() => {

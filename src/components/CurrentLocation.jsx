@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { CiLocationOn } from "react-icons/ci";
 
 export const CurrentLocation = () => {
-  const { name } = useParams();
+  const { name, country } = useParams();
 
   useEffect(() => {
     window.onpopstate = () => {
@@ -47,7 +47,7 @@ export const CurrentLocation = () => {
           </p>
         </div>
         <p className="text-[45px] font-bold leading-[60px] tracking-wider text-white">
-          {name} <br />
+          {name}, <br /> {country}
         </p>
       </div>
     </div>

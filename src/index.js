@@ -13,7 +13,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route
-          path="/current-location/:name"
+          path="/current-location/:name/:country"
           element={<CurrentLocationPage />}
         />
       </Routes>
