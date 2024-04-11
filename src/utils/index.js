@@ -34,5 +34,5 @@ export const weatherStatus = [
 ];
 
 export function fahrenheitToCelsius(fahrenheit) {
-  return ((fahrenheit - 32) * 5) / 9;
+ return (fahrenheit - 32) * 5/9;
 }

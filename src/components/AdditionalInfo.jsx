@@ -1,5 +1,6 @@
 import React from "react";
 import copyPath from "../assets/copy-path.png";
+import { fahrenheitToCelsius } from "../utils";
 
 export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
   return (
@@ -13,7 +14,7 @@ export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
         <div className="flex justify-between items-center gap-4">
           <div>
             <h4 className="text-[#96969A] text-sm mb-2 font-medium">
-              Precipitation
+              Temprature
             </h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
               {precipitation}
@@ -24,7 +25,7 @@ export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
               Humidity
             </h4>
             <p className="text-[#003339] text-[16px] leading-[18px] font-extrabold">
-              {humidity}%
+              {humidity}
             </p>
           </div>
           <div>
@@ -49,7 +50,7 @@ export const AdditionalInfo = ({ precipitation, humidity, wind }) => {
         </div>
 
         <div className="relative mt-4">
-          <img src={copyPath} alt="path" />
+          <img src={copyPath} alt="path" className="w-full" />
         </div>
       </div>
     </div>

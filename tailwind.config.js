@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "hero-pattern": "url('../src/assets/Bitmap.png')",
+      },
+      colors: {
+        locationBtn: "rgba(0,0,0,0.2)",
+      },
+    },
   },
   plugins: [],
 };

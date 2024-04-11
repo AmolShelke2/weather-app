@@ -1,48 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AdditionalInfo } from "./AdditionalInfo";
-import { API_KEY } from "../utils";
+import { weatherStatus } from "../utils";
 
-export const WeatherInfo = () => {
-  const [weatherData, setWeatherData] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-
-  useEffect(() => {
-    const getWeatherData = async () => {
-      try {
-        const apiKey = API_KEY;
-
-        if (latitude !== null && longitude !== null) {
-          const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
-
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          setWeatherData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      }
-    };
-
-    getWeatherData();
-  }, [latitude, longitude]);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        },
-        (error) => {
-          console.error("Error getting geolocation:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  }, []);
-
+export const WeatherInfo = ({ weatherData }) => {
   return (
     <div>
       {/* city info */}
@@ -81,6 +41,22 @@ export const WeatherInfo = () => {
             className="rounded-lg h-[110px] w-[130px] sm:h-[550px] sm:w-[500px]"
           />
         </div>
+      </div>
+
+      <div className="w-full flex gap-1  lg:justify-between px-2 lg:px-6 lg:gap-4 bg-[#003339] text-white mt-8 mb-12 rounded-2xl">
+        {weatherStatus.map((weather) => (
+          <div
+            className="flex flex-col items-center gap-1 py-4 px-4"
+            key={weather.icon}>
+            <span className="text-lg font-normal">{weather.time}</span>
+            <img
+              src={weather.icon}
+              alt="weather-icon"
+              className="object-contain"
+            />
+            <p>{weather.temperature}</p>
+          </div>
+        ))}
       </div>
 
       <AdditionalInfo
