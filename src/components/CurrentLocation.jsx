@@ -32,9 +32,11 @@ export const CurrentLocation = () => {
           <AiOutlineClose size={25} className="text-white cursor-pointer" />
         </Link>
 
-        <button className="bg-[#FF2D55] text-white px-6 py-2 rounded-lg cursor-pointer">
-          Live
-        </button>
+        <Link to={"/"}>
+          <button className="bg-[#FF2D55] text-white px-6 py-2 rounded-lg cursor-pointer">
+            Live
+          </button>
+        </Link>
       </div>
 
       {/* current location container */}

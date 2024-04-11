@@ -11,6 +11,7 @@ export const MainContainer = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ export const MainContainer = () => {
         }
       } catch (error) {
         console.error("Error fetching weather data:", error);
+        setError("Error fetching weather data. Please try again later.");
       }
     };
 
@@ -40,8 +42,6 @@ export const MainContainer = () => {
     );
   };
 
-  console.log(weatherData);
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -51,29 +51,44 @@ export const MainContainer = () => {
         },
         (error) => {
           console.error("Error getting geolocation:", error);
+          setError("Error getting geolocation. Please try again later.");
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
+      setError("Geolocation is not supported by this browser.");
     }
   }, []);
 
   const handleSearchCity = async () => {
     try {
+      if (!searchTerm.trim()) {
+        setError("Please enter a city name.");
+        return;
+      }
+
       const apiKey = API_KEY;
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${apiKey}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
+
+      if (data.cod === "404") {
+        setError("City not found. Please enter a valid city name.");
+        return;
+      }
+
       setWeatherData(data);
+      setError(null);
     } catch (error) {
       console.error("Error fetching weather data:", error);
+      setError("Error fetching weather data. Please try again later.");
     }
   };
 
   return (
     <div className="bg-white w-full lg:max-w-[1200px] lg:mx-auto py-4">
       {/* top  */}
-      <div className="w-full flex justify-between items-center mb-2 px-4">
+      <div className="w-full flex justify-between items-center mb-2 px-4 border-b py-1">
         <span className="text-black text-[16px] font-normal">9.41</span>
 
         <div className="flex items-center gap-2">
@@ -82,6 +97,7 @@ export const MainContainer = () => {
           <IoBatteryFull size={22} className="text-black cursor-pointer" />
         </div>
       </div>
+
       {/* search and menu icon */}
       <div className="flex justify-between items-center py-2 px-2">
         <div onClick={handleShowScreenTwo}>
@@ -105,6 +121,11 @@ export const MainContainer = () => {
           />
         </div>
       </div>
+
+      {/* Error handling */}
+      {error && (
+        <div className="text-red-500 text-sm px-4 py-2 text-right">{error}</div>
+      )}
 
       <WeatherInfo weatherData={weatherData} />
     </div>
