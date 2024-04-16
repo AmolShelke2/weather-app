@@ -79,6 +79,7 @@ export const MainContainer = () => {
 
       setWeatherData(data);
       setError(null);
+      setSearchTerm("");
     } catch (error) {
       console.error("Error fetching weather data:", error);
       setError("Error fetching weather data. Please try again later.");
@@ -112,6 +113,7 @@ export const MainContainer = () => {
             onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
+            onKeyDown={(e) => (e.key === "Enter" ? handleSearchCity() : null)}
             className="border w-[300px] px-2 rounded-md text-black py-2 placeholder:capitalize focus:border focus:border-gray-400 focus:outline-none"
           />
           <AiOutlineSearch
